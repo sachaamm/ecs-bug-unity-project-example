@@ -14,19 +14,33 @@ namespace GenerativeRoad.Scripts._DOTS._System._Test
             RequireForUpdate<TestComplexPrefab>();
         }
 
+        bool initialized = false;
+
         protected override void OnUpdate()
         {
             if (Input.GetKeyDown(KeyCode.Keypad4))
             {
-                var testComplexPrefab = GetSingleton<TestComplexPrefab>();
-                GameObject camGo = Camera.main.gameObject;
-                Vector3 pos = camGo.transform.position + camGo.transform.forward * 3;
-
-                InstantiateAtPos(testComplexPrefab.rootPrefab, pos, quaternion.identity);
+                Foo();
 
             }
 
+            if (!initialized)
+            {
+                Foo();
+                initialized = true;
+            }
+
         }
+
+        void Foo()
+        {
+            var testComplexPrefab = GetSingleton<TestComplexPrefab>();
+            GameObject camGo = Camera.main.gameObject;
+            Vector3 pos = camGo.transform.position + camGo.transform.forward * 3;
+
+            InstantiateAtPos(testComplexPrefab.rootPrefab, pos, quaternion.identity);
+        }
+
 
         void InstantiateAtPos(Entity prefab, float3 pos, quaternion rot)
         {
